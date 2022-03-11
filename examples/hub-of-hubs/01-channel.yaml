@@ -1,0 +1,8 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Channel
+metadata:
+  name: test-repo-git
+  namespace: hoh-subscriptions
+spec:
+    type: Git
+    pathname: https://github.com/vMaroon/test-repo

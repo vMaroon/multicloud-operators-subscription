@@ -312,6 +312,12 @@ spec:
                     type: array
                   local:
                     type: boolean
+                  hubOfHubsGitOps:
+                    description: 'HubOfHubsGitOps overrides the cloning process when present, leading to the usage
+                    of HOH custom implementation of a subscriber that clones a repo of files (depth 1) to a mounted
+                    storage (to where specified by AnnotationGitCloningPath).
+                    The value of the field should be the tag of a syncer implemented in hub-of-hubs-nonk8s-gitops'
+                    type: string
                   placementRef:
                     description: 'ObjectReference contains enough information to let
                       you inspect or modify the referred object. --- New uses of this

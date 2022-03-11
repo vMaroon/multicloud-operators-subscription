@@ -38,6 +38,11 @@ type Placement struct {
 	GenericPlacementFields `json:",inline"`
 	PlacementRef           *corev1.ObjectReference `json:"placementRef,omitempty"`
 	Local                  *bool                   `json:"local,omitempty"`
+	// HubOfHubsGitOps overrides the cloning process when present, leading to the usage
+	// of HOH custom implementation of a subscriber that clones a repo of files (depth 1) to a mounted
+	// storage (to where specified by AnnotationGitCloningPath).
+	// The value of the field should be the tag of a syncer implemented in hub-of-hubs-nonk8s-gitops
+	HubOfHubsGitOps *string `json:"hubOfHubsGitOps,omitempty"`
 }
 
 // ClusterConditionFilter defines filter to filter cluster condition
