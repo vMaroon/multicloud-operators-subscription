@@ -2,11 +2,13 @@ apiVersion: apps.open-cluster-management.io/v1
 kind: Subscription
 metadata:
   name: git-test-repo-subscription
+  namespace: hoh-subscriptions
   annotations:
-    hub-of-hubs.open-cluster-management.io/cloning-path: /tmp
+    apps.open-cluster-management.io/github-branch: main
+    hub-of-hubs.open-cluster-management.io/cloning-path: /opt/hub-of-hubs-subscription-storage
 spec:
   channel: hoh-subscriptions/test-repo-git
   name: test-repo
   placement:
     local: true
-    hubOfHubsGitOps: true
+    hubOfHubsGitOps: ManagedClustersSet

@@ -1,0 +1,98 @@
+- name: multicluster-operators-standalone-subscription
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: multicluster-operators-standalone-subscription
+    strategy: {}
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: multicluster-operators-standalone-subscription
+      spec:
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+              - podAffinityTerm:
+                  labelSelector:
+                    matchExpressions:
+                      - key: app
+                        operator: In
+                        values:
+                          - >-
+                            multicluster-operators-standalone-subscription
+                  topologyKey: failure-domain.beta.kubernetes.io/zone
+                weight: 70
+              - podAffinityTerm:
+                  labelSelector:
+                    matchExpressions:
+                      - key: app
+                        operator: In
+                        values:
+                          - >-
+                            multicluster-operators-standalone-subscription
+                  topologyKey: kubernetes.io/hostname
+                weight: 35
+        containers:
+          - resources:
+              limits:
+                cpu: 750m
+                memory: 2Gi
+              requests:
+                cpu: 150m
+                memory: 128Mi
+            readinessProbe:
+              exec:
+                command:
+                  - ls
+              initialDelaySeconds: 15
+              periodSeconds: 15
+            name: multicluster-operators-standalone-subscription
+            command:
+              - /usr/local/bin/multicluster-operators-subscription
+              - '--standalone'
+              - '--sync-interval=60'
+            livenessProbe:
+              exec:
+                command:
+                  - ls
+              initialDelaySeconds: 15
+              periodSeconds: 15
+            env:
+              - name: WATCH_NAMESPACE
+              - name: POD_NAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.name
+              - name: POD_NAMESPACE
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+              - name: DEPLOYMENT_LABEL
+                value: multicluster-operators-standalone-subscription
+              - name: OPERATOR_NAME
+                value: multicluster-operators-standalone-subscription
+            securityContext:
+              privileged: true
+            volumeMounts:
+              - mountPath: /opt/hub-of-hubs-subscription-storage
+                name: hoh-gitops-pv
+                readOnly: false
+              - mountPath: /tmp
+                name: tmp
+              - mountPath: /etc/subscription
+                name: multicluster-operators-subscription-tls
+                readOnly: true
+            image: >-
+              quay.io/maroonayoub/multicloud-operators-subscription@sha256:539348bf5afe3113f28c101d29044baae48e7e7e86fbc11cfa736541f4a482d0
+        securityContext:
+          runAsNonRoot: true
+        serviceAccountName: multicluster-operators
+        volumes:
+          - name: hoh-gitops-pv
+            persistentVolumeClaim:
+              claimName: hoh-gitops-pv-claim
+          - emptyDir: {}
+            name: tmp
+          - name: multicluster-operators-subscription-tls

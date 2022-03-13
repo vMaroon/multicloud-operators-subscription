@@ -104,7 +104,7 @@ func (ghs *Subscriber) SubscribeItem(subitem *appv1alpha1.SubscriberItem) error 
 
 	if subitem.Subscription.Spec.Placement != nil && subitem.Subscription.Spec.Placement.HubOfHubsGitOps != nil &&
 		*subitem.Subscription.Spec.Placement.HubOfHubsGitOps != "" {
-		klog.Info("subscribeItem context hijacked by hub-of-hubs, syncer tag {%s}",
+		klog.Info("subscribeItem context hijacked by hub-of-hubs, syncer tag ",
 			*subitem.Subscription.Spec.Placement.HubOfHubsGitOps)
 
 		return ghs.hohSubscribeItem(subitem)
