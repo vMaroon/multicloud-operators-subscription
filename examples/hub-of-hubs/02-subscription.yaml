@@ -5,10 +5,9 @@ metadata:
   namespace: hoh-subscriptions
   annotations:
     apps.open-cluster-management.io/github-branch: main
-    hub-of-hubs.open-cluster-management.io/cloning-path: /opt/hub-of-hubs-subscription-storage
 spec:
   channel: hoh-subscriptions/test-repo-git
   name: test-repo
   placement:
     local: true
-    hubOfHubsGitOps: ManagedClustersSet
+    hubOfHubsGitOps: ManagedClustersGroup

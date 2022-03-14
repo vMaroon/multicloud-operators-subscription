@@ -15,7 +15,7 @@
 package git
 
 import (
-	"fmt"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -29,6 +29,8 @@ import (
 	appv1 "open-cluster-management.io/multicloud-operators-subscription/pkg/apis/apps/v1"
 	"open-cluster-management.io/multicloud-operators-subscription/pkg/utils"
 )
+
+const sharedVolumePath = "/opt/hub-of-hubs-subscription-storage"
 
 // HubOfHubsSubscriberItem - defines the unit of namespace subscription
 type HubOfHubsSubscriberItem struct {
@@ -265,13 +267,7 @@ func (ghsi *HubOfHubsSubscriberItem) cloneGitRepo() (commitID string, err error)
 		}
 	}
 
-	cloningPath, found := annotations[appv1.AnnotationGitCloningPath]
-	if !found {
-		klog.Error(err, " custom hub of hubs cloning path annotation not found")
-		return "", err
-	}
-
-	ghsi.repoRoot = fmt.Sprintf("%s/%s", cloningPath, ghsi.Subscription.Name)
+	ghsi.repoRoot = filepath.Join(sharedVolumePath, ghsi.Subscription.Name)
 
 	cloneOptions := &utils.GitCloneOption{
 		CommitHash:  ghsi.desiredCommit,

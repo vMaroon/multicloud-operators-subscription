@@ -25,9 +25,6 @@ import (
 )
 
 var (
-	// AnnotationGitCloningPath specifies the path to clone a repository to, used by the hub-of-hubs custom logic.
-	// Should be the path to the shared volume.
-	AnnotationGitCloningPath = "hub-of-hubs.open-cluster-management.io/cloning-path"
 	// AnnotationSyncSource target deployable to rolling update to
 	AnnotationSyncSource = SchemeGroupVersion.Group + "/sync-source"
 	// AnnotationRollingUpdateTarget target deployable to rolling update to
