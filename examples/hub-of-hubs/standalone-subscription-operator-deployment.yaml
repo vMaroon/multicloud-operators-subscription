@@ -85,7 +85,7 @@
                 name: multicluster-operators-subscription-tls
                 readOnly: true
             image: >-
-              quay.io/maroonayoub/multicloud-operators-subscription@sha256:539348bf5afe3113f28c101d29044baae48e7e7e86fbc11cfa736541f4a482d0
+              quay.io/maroonayoub/multicloud-operators-subscription@sha256:1c57e1e77ea3c929c7176681d5b64eca43354bbaf00aeb7f7ddb01d3c6d15ad0
         securityContext:
           runAsNonRoot: true
         serviceAccountName: multicluster-operators

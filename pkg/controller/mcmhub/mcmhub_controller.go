@@ -524,7 +524,8 @@ func (r *ReconcileSubscription) Reconcile(ctx context.Context, request reconcile
 	if instance.Spec.Placement != nil && instance.Spec.Placement.HubOfHubsGitOps != nil &&
 		*instance.Spec.Placement.HubOfHubsGitOps != "" {
 		klog.Info("Subscription: ", request.NamespacedName, " has spec.placement.hubOfHubsGitOps set but is not local.",
-			" Did you mean to set spec.placement.local to true?")
+			" Did you mean to set spec.placement.local to true? Setting name to empty to avoid requeue.")
+		instance.Name = ""
 
 		return reconcile.Result{}, nil
 	}
